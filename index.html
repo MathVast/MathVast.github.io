@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathias Vast — Information Retrieval Researcher</title>
+<meta name="description" content="Mathias Vast, PhD student in Information Retrieval at ISIR, Sorbonne Université. Zero-shot domain adaptation and interpretability of neural retrieval models.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FCFCFA;
+  --ink: #141B2D;
+  --slate: #5B6478;
+  --line: #E4E4DE;
+  --highlight: #FFE05C;
+  --blue: #2A46C4;
+  --blue-dark: #1D3390;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", -apple-system, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- header ---------- */
+header {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+header .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.logo {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+nav { display: flex; gap: 22px; }
+nav a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--slate);
+  text-decoration: none;
+}
+nav a:hover, nav a:focus-visible { color: var(--blue); }
+a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
+
+/* ---------- hero ---------- */
+.hero { padding: 72px 0 56px; }
+h1 {
+  font-family: "Spectral", serif;
+  font-weight: 500;
+  font-size: clamp(38px, 6vw, 54px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+.hero .thesis {
+  font-family: "Spectral", serif;
+  font-size: clamp(19px, 2.6vw, 23px);
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 640px;
+}
+mark {
+  background: linear-gradient(transparent 45%, var(--highlight) 45%);
+  color: inherit;
+  padding: 0 2px;
+}
+.hero .meta {
+  margin-top: 26px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13.5px;
+  color: var(--slate);
+  line-height: 1.9;
+}
+.hero .meta a { color: var(--blue); text-decoration: none; }
+.hero .meta a:hover { text-decoration: underline; }
+.links { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.links a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.links a:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ---------- sections ---------- */
+section { padding: 48px 0; border-top: 1px solid var(--line); }
+h2 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 24px;
+}
+.prose p { margin-bottom: 16px; max-width: 640px; }
+.prose a { color: var(--blue); }
+.prose .phd-title {
+  font-family: "Spectral", serif;
+  font-style: italic;
+  font-size: 19px;
+  border-left: 3px solid var(--highlight);
+  padding: 4px 0 4px 16px;
+  margin: 22px 0;
+  color: var(--ink);
+}
+.topics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.topics span {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12.5px;
+  color: var(--slate);
+  background: #F1F1EC;
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+/* ---------- publications-as-search ---------- */
+.searchbar { position: relative; margin-bottom: 8px; }
+.searchbar input {
+  width: 100%;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 16px 12px 42px;
+  transition: border-color 0.15s;
+}
+.searchbar input:focus { outline: none; border-color: var(--blue); }
+.searchbar svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; stroke: var(--slate);
+}
+.search-hint {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--slate);
+  margin-bottom: 28px;
+}
+.pub-year {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--slate);
+  margin: 30px 0 6px;
+}
+.pub {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.pub:last-child { border-bottom: none; }
+.pub h3 {
+  font-family: "Spectral", serif;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+.pub h3 a { color: var(--ink); text-decoration: none; }
+.pub h3 a:hover { color: var(--blue); }
+.pub .authors { font-size: 14.5px; color: var(--slate); margin-bottom: 6px; }
+.pub .authors b { color: var(--ink); font-weight: 600; }
+.pub .venue-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pub .venue {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--blue-dark);
+  background: #EBEEF9;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+.pub .plinks { display: flex; gap: 12px; }
+.pub .plinks a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--blue);
+  text-decoration: none;
+}
+.pub .plinks a:hover { text-decoration: underline; }
+.no-results {
+  display: none;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  color: var(--slate);
+  padding: 28px 0;
+}
+.pub mark, .no-results mark { background: var(--highlight); padding: 0 1px; }
+
+/* ---------- footer ---------- */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 32px 0 48px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12.5px;
+  color: var(--slate);
+}
+footer a { color: var(--blue); text-decoration: none; }
+
+@media (max-width: 560px) {
+  .hero { padding: 52px 0 44px; }
+  nav { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">mathias.vast</a>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#publications">publications</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero wrap">
+    <h1>Mathias Vast</h1>
+    <p class="thesis">
+      I study how to improve the <mark>robustness, effectiveness and efficiency</mark> of neural retrieval models —
+      opening them up with <mark>interpretability</mark> first, then improving their architecture.
+    </p>
+    <p class="meta">
+      PhD student in Information Retrieval<br>
+      <a href="https://www.isir.upmc.fr/?lang=en">ISIR</a>, Sorbonne Université · MLIA team × <a href="https://www.sinequa.com">Sinequa</a> · Paris<br>
+      Advised by Benjamin Piwowarski &amp; Laure Soulier
+    </p>
+    <div class="links">
+      <a href="mailto:vast@isir.upmc.fr">email</a>
+      <a href="https://scholar.google.com/citations?user=QGCo1PAAAAAJ">google scholar</a>
+      <a href="https://github.com/MathVast">github</a>
+      <a href="https://www.linkedin.com/in/mathias-vast">linkedin</a>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap prose">
+      <h2>About</h2>
+      <p>
+        I'm a 3rd-year PhD student in Information Retrieval within the MLIA team at ISIR,
+        Sorbonne Université, working in collaboration with Sinequa. My research is supervised by
+        Benjamin Piwowarski and Laure Soulier.
+      </p>
+      <p class="phd-title">Improving the Robustness, Efficiency and Effectiveness of Neural Rankers in Information Retrieval</p>
+      <p>
+        The goal of this thesis is to jointly improve the robustness,
+        effectiveness, and efficiency of neural IR models, and in particular of cross-encoders. To
+        this end, we first studied their adaptation to new domains without supervision, before turning
+        to interpretability in order to understand how they model relevance internally. These
+        findings, combined to the exploration of the most effective training strategies, ultimately led to
+        design MICE, a new cross-encoder architecture that significantly reduces computational
+        cost while preserving, and even improving, the model’s effectiveness and robustness.
+      </p>
+      <div class="topics">
+        <span>information retrieval</span>
+        <span>interpretability</span>
+        <span>cross-encoders</span>
+        <span>late interaction · ColBERT</span>
+        <span>learned sparse retrieval · SPLADE</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="wrap">
+      <h2>Publications</h2>
+      <div class="searchbar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <input id="pubsearch" type="search" placeholder="query my publications…" aria-label="Search publications">
+      </div>
+      <p class="search-hint">an IR researcher's site should let you retrieve!</p>
+
+      <div id="publist"></div>
+      <p class="no-results" id="noresults">0 results retrieved — perhaps not my work?</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap prose">
+      <h2>Contact</h2>
+      <p>
+        Open to discussions on IR (as a whole) and interpretability — feel free to reach out at
+        <a href="mailto:vast@isir.upmc.fr">vast@isir.upmc.fr</a>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    © 2026 Mathias Vast · Hosted on <a href="https://pages.github.com">GitHub Pages</a>
+  </div>
+</footer>
+
+<script>
+const PUBS = [
+  {
+    year: 2026,
+    title: "MICE: Minimal Interaction Cross-Encoders for Efficient Re-ranking",
+    authors: ["Mathias Vast", "Victor Morand", "Basile Van Cooten", "Laure Soulier", "Josiane Mothe", "Benjamin Piwowarski"],
+    venue: "preprint",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2602.16299" },
+      { label: "code", url: "https://github.com/xpmir/mice" }
+    ]
+  },
+  {
+    year: 2026,
+    title: "Reproducing and Comparing Distillation Techniques for Cross-Encoders",
+    authors: ["Victor Morand", "Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Josiane Mothe", "Benjamin Piwowarski"],
+    venue: "preprint",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2603.03010" },
+      {label: "code", url: "https://github.com/xpmir/cross-encoders"}       
+    ]
+  },
+  {
+    year: 2026,
+    title: "IR Lens: A Tool for Interpreting Cross-Encoder Models",
+    authors: ["Mihai Branga-Peicu", "Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Jules Françoise", "Benjamin Piwowarski", "Baptiste Caramiaux"],
+    venue: "SIGIR 2026",
+    links: [
+      { label: "website", url: "https://ir-lens.isir.upmc.fr/login" },
+      { label: "code", url: "https://gitlab.isir.upmc.fr/branga/IR-Lens" }      
+    ]
+  },
+  {
+    year: 2026,
+    title: "From Tokens to Concepts: Leveraging SAE for SPLADE",
+    authors: ["Yuxuan Zong", "Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Benjamin Piwowarski"],
+    venue: "SIGIR 2026",
+    links: [{ label: "DOI", url: "https://dl.acm.org/doi/10.1145/3805712.3809565" }]
+  },
+  {
+    year: 2025,
+    title: "Understanding Matching Mechanisms in Cross-Encoders",
+    authors: ["Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Benjamin Piwowarski"],
+    venue: "WExIR @ SIGIR 2025",
+    links: [{ label: "HAL", url: "https://hal.science/hal-05122957" }]
+  },
+  {
+    year: 2025,
+    title: "Comprendre la Nature des Signaux de Correspondance dans les Modèles Neuronaux pour la RI",
+    authors: ["Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Benjamin Piwowarski"],
+    venue: "CORIA 2025",
+    links: [{ label: "HAL", url: "https://hal.science/hal-05122843" }]
+  },
+  {
+    year: 2024,
+    title: "Which Neurons Matter in IR? Applying Integrated Gradients-based Methods to Understand Cross-Encoders",
+    authors: ["Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Benjamin Piwowarski"],
+    venue: "ICTIR 2024",
+    links: [
+      { label: "DOI", url: "https://doi.org/10.1145/3664190.3672528" },
+      { label: "code", url: "https://github.com/MathVast/IntegratedGradients" }
+    ]
+  },
+  {
+    year: 2024,
+    title: "Simple Domain Adaptation for Sparse Retrievers",
+    authors: ["Mathias Vast", "Yuxuan Zong", "Basile Van Cooten", "Benjamin Piwowarski", "Laure Soulier"],
+    venue: "ECIR 2024",
+    links: [
+      { label: "DOI", url: "https://doi.org/10.1007/978-3-031-56063-7_32" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2401.11509" }
+    ]
+  },
+  {
+    year: 2024,
+    title: "Adaptation de Domaine Simple pour la Recherche Parcimonieuse",
+    authors: ["Mathias Vast", "Yuxuan Zong", "Basile Van Cooten", "Benjamin Piwowarski", "Laure Soulier"],
+    venue: "CORIA 2024",
+    links: []
+  }
+];
+
+const ME = "Mathias Vast";
+const list = document.getElementById("publist");
+const noResults = document.getElementById("noresults");
+const input = document.getElementById("pubsearch");
+
+function esc(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function highlight(text, terms) {
+  let out = esc(text);
+  for (const t of terms) {
+    if (!t) continue;
+    const re = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+    out = out.replace(re, "<mark>$1</mark>");
+  }
+  return out;
+}
+
+function render(query) {
+  const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const matches = PUBS.filter(p => {
+    if (!terms.length) return true;
+    const hay = (p.title + " " + p.authors.join(" ") + " " + p.venue + " " + p.year).toLowerCase();
+    return terms.every(t => hay.includes(t));
+  });
+
+  list.innerHTML = "";
+  noResults.style.display = matches.length ? "none" : "block";
+
+  let lastYear = null;
+  for (const p of matches) {
+    if (p.year !== lastYear) {
+      const y = document.createElement("p");
+      y.className = "pub-year";
+      y.textContent = p.year;
+      list.appendChild(y);
+      lastYear = p.year;
+    }
+    const el = document.createElement("article");
+    el.className = "pub";
+    const authorsHtml = p.authors
+      .map(a => a === ME ? "<b>" + highlight(a, terms) + "</b>" : highlight(a, terms))
+      .join(", ");
+    const linksHtml = p.links
+      .map(l => '<a href="' + l.url + '">' + l.label + " ↗</a>")
+      .join("");
+    el.innerHTML =
+      "<h3>" + (p.links[0] ? '<a href="' + p.links[0].url + '">' : "") + highlight(p.title, terms) + (p.links[0] ? "</a>" : "") + "</h3>" +
+      '<p class="authors">' + authorsHtml + "</p>" +
+      '<div class="venue-row"><span class="venue">' + highlight(p.venue, terms) + '</span><span class="plinks">' + linksHtml + "</span></div>";
+    list.appendChild(el);
+  }
+}
+
+input.addEventListener("input", () => render(input.value));
+render("");
+</script>
+</body>
+</html>
