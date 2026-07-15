@@ -195,6 +195,18 @@ h2 {
   border-radius: 4px;
   padding: 2px 8px;
 }
+/* per-conference colors */
+.pub .venue.sigir { color: #5B2A86; background: #F0EAF8; }
+.pub .venue.ecir  { color: #0E6B4F; background: #E4F3EC; }
+.pub .venue.coria { color: #9C2B3B; background: #FAEAEC; }
+.pub .venue.ictir { color: #8A5A00; background: #FBF1DC; }
+.pub .plinks { display: flex; gap: 12px; }
+.pub .plinks a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--blue);
+  text-decoration: none;
+}
 .pub .plinks { display: flex; gap: 12px; }
 .pub .plinks a {
   font-family: "IBM Plex Mono", monospace;
@@ -419,6 +431,16 @@ function highlight(text, terms) {
   return out;
 }
 
+function venueClass(venue) {
+  const v = venue.toLowerCase();
+  if (v.includes("sigir")) return "sigir";
+  if (v.includes("ecir"))  return "ecir";
+  if (v.includes("coria")) return "coria";
+  if (v.includes("ictir")) return "ictir";
+  return "";
+}
+
+
 function render(query) {
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const matches = PUBS.filter(p => {
@@ -450,7 +472,7 @@ function render(query) {
     el.innerHTML =
       "<h3>" + (p.links[0] ? '<a href="' + p.links[0].url + '">' : "") + highlight(p.title, terms) + (p.links[0] ? "</a>" : "") + "</h3>" +
       '<p class="authors">' + authorsHtml + "</p>" +
-      '<div class="venue-row"><span class="venue">' + highlight(p.venue, terms) + '</span><span class="plinks">' + linksHtml + "</span></div>";
+      '<div class="venue-row"><span class="venue ' + venueClass(p.venue) + '">' + highlight(p.venue, terms) + '</span><span class="plinks">' + linksHtml + "</span></div>";
     list.appendChild(el);
   }
 }
