@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mathias Vast — Information Retrieval Researcher</title>
 <meta name="description" content="Mathias Vast, PhD student in Information Retrieval at ISIR, Sorbonne Université. Zero-shot domain adaptation and interpretability of neural retrieval models.">
+<link rel="canonical" href="https://mathvast.github.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -207,13 +208,6 @@ h2 {
   color: var(--blue);
   text-decoration: none;
 }
-.pub .plinks { display: flex; gap: 12px; }
-.pub .plinks a {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  color: var(--blue);
-  text-decoration: none;
-}
 .pub .plinks a:hover { text-decoration: underline; }
 .no-results {
   display: none;
@@ -338,7 +332,7 @@ const PUBS = [
     year: 2026,
     title: "MICE: Minimal Interaction Cross-Encoders for Efficient Re-ranking",
     authors: ["Mathias Vast", "Victor Morand", "Basile Van Cooten", "Laure Soulier", "Josiane Mothe", "Benjamin Piwowarski"],
-    venue: "preprint",
+    venue: "under review",
     links: [
       { label: "arXiv", url: "https://arxiv.org/abs/2602.16299" },
       { label: "code", url: "https://github.com/xpmir/mice" }
@@ -348,7 +342,7 @@ const PUBS = [
     year: 2026,
     title: "Reproducing and Comparing Distillation Techniques for Cross-Encoders",
     authors: ["Victor Morand", "Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Josiane Mothe", "Benjamin Piwowarski"],
-    venue: "preprint",
+    venue: "under review",
     links: [
       { label: "arXiv", url: "https://arxiv.org/abs/2603.03010" },
       {label: "code", url: "https://github.com/xpmir/cross-encoders"}       
@@ -360,7 +354,7 @@ const PUBS = [
     authors: ["Mihai Branga-Peicu", "Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Jules Françoise", "Benjamin Piwowarski", "Baptiste Caramiaux"],
     venue: "SIGIR 2026",
     links: [
-      { label: "website", url: "https://ir-lens.isir.upmc.fr/login" },
+      { label: "website", url: "https://ir-lens.isir.upmc.fr" },
       { label: "code", url: "https://gitlab.isir.upmc.fr/branga/IR-Lens" }      
     ]
   },
@@ -421,14 +415,46 @@ const input = document.getElementById("pubsearch");
 
 function esc(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 
+// fold("Modèles") -> "modeles" : lowercase + strip diacritics, so queries
+// match regardless of accents (and vice versa)
+function fold(s) {
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 function highlight(text, terms) {
-  let out = esc(text);
-  for (const t of terms) {
-    if (!t) continue;
-    const re = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
-    out = out.replace(re, "<mark>$1</mark>");
+  if (!terms.length) return esc(text);
+  // build folded string + map from folded index back to original index
+  const chars = [], map = [];
+  for (let i = 0; i < text.length; i++) {
+    const f = fold(text[i]);
+    for (const c of f) { chars.push(c); map.push(i); }
   }
-  return out;
+  const fstr = chars.join("");
+  const ranges = [];
+  for (const t of terms) {
+    const ft = fold(t);
+    if (!ft) continue;
+    let idx = 0;
+    while ((idx = fstr.indexOf(ft, idx)) !== -1) {
+      ranges.push([map[idx], map[idx + ft.length - 1] + 1]);
+      idx += 1;
+    }
+  }
+  if (!ranges.length) return esc(text);
+  // merge overlapping ranges, then rebuild the original text with <mark>s
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged = [ranges[0]];
+  for (const r of ranges.slice(1)) {
+    const last = merged[merged.length - 1];
+    if (r[0] <= last[1]) last[1] = Math.max(last[1], r[1]);
+    else merged.push(r);
+  }
+  let out = "", pos = 0;
+  for (const [s, e] of merged) {
+    out += esc(text.slice(pos, s)) + "<mark>" + esc(text.slice(s, e)) + "</mark>";
+    pos = e;
+  }
+  return out + esc(text.slice(pos));
 }
 
 function venueClass(venue) {
@@ -442,11 +468,11 @@ function venueClass(venue) {
 
 
 function render(query) {
-  const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const terms = query.trim().split(/\s+/).filter(Boolean);
   const matches = PUBS.filter(p => {
     if (!terms.length) return true;
-    const hay = (p.title + " " + p.authors.join(" ") + " " + p.venue + " " + p.year).toLowerCase();
-    return terms.every(t => hay.includes(t));
+    const hay = fold(p.title + " " + p.authors.join(" ") + " " + p.venue + " " + p.year);
+    return terms.every(t => hay.includes(fold(t)));
   });
 
   list.innerHTML = "";
