@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Mathias Vast</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FCFCFA;
+  --ink: #141B2D;
+  --slate: #5B6478;
+  --line: #E4E4DE;
+  --highlight: #FFE05C;
+  --blue: #2A46C4;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Mono", monospace;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.card { max-width: 560px; text-align: center; }
+.code {
+  font-family: "Spectral", serif;
+  font-weight: 600;
+  font-size: clamp(72px, 15vw, 120px);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.code mark {
+  background: linear-gradient(transparent 55%, var(--highlight) 55%);
+  color: inherit;
+  padding: 0 6px;
+}
+h1 {
+  font-family: "Spectral", serif;
+  font-weight: 500;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+p { font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 28px; }
+a.home {
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 18px;
+  transition: border-color 0.15s, color 0.15s;
+}
+a.home:hover { border-color: var(--blue); color: var(--blue); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="code"><mark>404</mark></div>
+    <h1>Document not retrieved</h1>
+    <p>This page scored zero relevance against the index — it doesn't exist,
+    or it moved. Even a good re-ranker can't fix an empty candidate set.</p>
+    <a class="home" href="/">← back to the homepage</a>
+  </div>
+</body>
+</html>
