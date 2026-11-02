@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mathias Vast — Information Retrieval Researcher</title>
-<meta name="description" content="Mathias Vast, PhD student in Information Retrieval at ISIR, Sorbonne Université. Zero-shot domain adaptation and interpretability of neural retrieval models.">
+<meta name="description" content="Mathias Vast, PhD in Information Retrieval from ISIR, Sorbonne Université. Zero-shot domain adaptation and interpretability of neural retrieval models.">
 <link rel="canonical" href="https://mathvast.github.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -141,6 +141,20 @@ h2 {
   padding: 4px 10px;
 }
 
+.news { list-style: none; max-width: 640px; }
+.news li { display: flex; gap: 20px; padding: 10px 0; }
+.news .date {
+  flex: 0 0 110px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--slate);
+  padding-top: 2px;
+}
+.news a { color: var(--blue); }
+@media (max-width: 560px) {
+  .news li { flex-direction: column; gap: 2px; }
+}
+
 /* ---------- publications-as-search ---------- */
 .searchbar { position: relative; margin-bottom: 8px; }
 .searchbar input {
@@ -242,6 +256,7 @@ footer a { color: var(--blue); text-decoration: none; }
   <div class="wrap">
     <a class="logo" href="#">mathias.vast</a>
     <nav>
+      <a href="#news">news</a>
       <a href="#about">about</a>
       <a href="#publications">publications</a>
       <a href="#contact">contact</a>
@@ -257,7 +272,7 @@ footer a { color: var(--blue); text-decoration: none; }
       opening them up with <mark>interpretability</mark> first, then improving their architecture.
     </p>
     <p class="meta">
-      PhD student in Information Retrieval<br>
+      PhD in Information Retrieval (defended September 2026)<br>
       <a href="https://www.isir.upmc.fr/?lang=en">ISIR</a>, Sorbonne Université · MLIA team × <a href="https://www.sinequa.com">Sinequa</a> · Paris<br>
       Advised by Benjamin Piwowarski &amp; Laure Soulier
     </p>
@@ -270,17 +285,28 @@ footer a { color: var(--blue); text-decoration: none; }
     </div>
   </div>
 
+  <section id="news">
+    <div class="wrap">
+      <h2>News</h2>
+      <ul class="news">
+        <li><span class="date">Oct 2026</span><span>Attended <b>EMNLP 2026</b> to present <a href="https://aclanthology.org/2026.emnlp-main.1736/">MICE: Minimal Interaction Cross-Encoders for Efficient Re-ranking</a>.</span></li>
+        <li><span class="date">Sep 24, 2026</span><span>I successfully defended my PhD thesis, <i>Improving the Robustness, Efficiency and Effectiveness of Neural Rankers in Information Retrieval</i>.</span></li>
+      </ul>
+    </div>
+  </section>
+
   <section id="about">
     <div class="wrap prose">
       <h2>About</h2>
       <p>
-        I'm a 3rd-year PhD student in Information Retrieval within the MLIA team at ISIR,
-        Sorbonne Université, working in collaboration with Sinequa. My research is supervised by
+        I recently completed my PhD in Information Retrieval within the MLIA team at ISIR,
+        Sorbonne Université, in collaboration with Sinequa, and defended my thesis on
+        September 24, 2026. My research was supervised by
         Benjamin Piwowarski and Laure Soulier.
       </p>
       <p class="phd-title">Improving the Robustness, Efficiency and Effectiveness of Neural Rankers in Information Retrieval</p>
       <p>
-        The goal of this thesis is to jointly improve the robustness,
+        The goal of my thesis was to jointly improve the robustness,
         effectiveness, and efficiency of neural IR models, and in particular of cross-encoders. To
         this end, we first studied their adaptation to new domains without supervision, before turning
         to interpretability in order to understand how they model relevance internally. These
@@ -333,17 +359,24 @@ footer a { color: var(--blue); text-decoration: none; }
 const PUBS = [
   {
     year: 2026,
+    title: "MICE to Meet You: From Re-ranking Only to End-to-End Retrieval",
+    authors: ["Victor Morand", "Yuxuan Zong", "Mathias Vast", "Josiane Mothe", "Benjamin Piwowarski"],
+    venue: "Under review",
+    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2610.31932" }]
+  },
+  {
+    year: 2026,
     title: "MICE: Minimal Interaction Cross-Encoders for Efficient Re-ranking",
     authors: ["Mathias Vast", "Victor Morand", "Basile Van Cooten", "Laure Soulier", "Josiane Mothe", "Benjamin Piwowarski"],
     venue: "EMNLP 2026",
     links: [
-      { label: "arXiv", url: "https://arxiv.org/abs/2602.16299" },
+      { label: "ACL Anthology", url: "https://aclanthology.org/2026.emnlp-main.1736/" },
       { label: "code", url: "https://github.com/xpmir/mice" }
     ]
   },
   {
     year: 2026,
-    title: "Reproducing and Comparing Distillation Techniques for Cross-Encoders",
+    title: "Building Better Encoder-only Cross-Encoders: A Controlled Study of Training Strategies for Neural Re-ranking",
     authors: ["Victor Morand", "Mathias Vast", "Basile Van Cooten", "Laure Soulier", "Josiane Mothe", "Benjamin Piwowarski"],
     venue: "CIKM 2026",
     links: [
